@@ -10,9 +10,17 @@ import SwiftUI
 
 struct PlanetCardView: View {
     let planet: PlanetModel
+    
     var body: some View {
         ZStack {
             VStack(alignment: .leading) {
+                HStack(alignment: .top) {
+                    AsyncImage(url: URL(string: "https://picsum.photos/200")) {image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    } placeholder: { ProgressView().progressViewStyle(.circular) }
+                }
                 HStack(alignment: .top) {
                     Text("Name : ")
                         .fontWeight(.bold)

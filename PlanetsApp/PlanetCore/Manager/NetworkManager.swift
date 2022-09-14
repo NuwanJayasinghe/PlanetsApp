@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+// define internet API endpoints
 enum Endpoint: String {
     case planets
 }
@@ -23,10 +24,15 @@ class NetworkManager {
     private var cancellables = Set<AnyCancellable>()
     private let baseURL = "https://swapi.dev/api/"
     
-    
+    // user for internal API call using Enum
     func getData<T: Decodable>(endpoint: Endpoint, id: Int? = nil, type: T.Type) -> Future<T, Error> {
+        return self.getData(endpoint: self.baseURL.appending(endpoint.rawValue), type: type)
+    }
+    
+    // user for API call using url string
+    func getData<T: Decodable>(endpoint: String?, id: Int? = nil, type: T.Type) -> Future<T, Error> {
         return Future<T, Error> { [weak self] promise in
-            guard let self = self, let url = URL(string: self.baseURL.appending(endpoint.rawValue)) else {
+            guard let self = self, let endpoint = endpoint, let url = URL(string: endpoint) else {
                 return promise(.failure(NetworkError.invalidURL))
             }
             print("URL is \(url.absoluteString)")
