@@ -22,6 +22,10 @@ struct ContentView: View {
                                 }
                                 .foregroundColor(.black)
                             }
+                        } else {
+                            Spacer()
+                            Text("Loading ...")
+                                .fontWeight(.medium)
                         }
                     }
                 }
